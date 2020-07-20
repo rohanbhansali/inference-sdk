@@ -22,7 +22,7 @@ class MockServerTestCase(unittest.TestCase):
         if should_start_server:
             popen_args = ["./start_server.sh", self.command, "--name", self.test_container_name]
             print("Starting", self.test_name, ' '.join(popen_args))
-            with open("tests-docker-stdout.txt","wb") as out, open("tests-docker-stderr.txt","wb") as err:
+            with open("tests-docker-stdout.log","wb") as out, open("tests-docker-stderr.log","wb") as err:
                 self.server_proc = subprocess.Popen(popen_args,
                     stdout=out,
                     stderr=err,
