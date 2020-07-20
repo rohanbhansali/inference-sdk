@@ -20,9 +20,13 @@ class MockServerTestCase(unittest.TestCase):
     def setUp(self):
         should_start_server = not os.getenv('ARTERYS_SDK_ASSUME_SERVER_STARTED', False)
         if should_start_server:
-            print("Starting", self.test_name)
-            self.server_proc = subprocess.Popen(["./start_server.sh", self.command, "--name", self.test_container_name], stdout=subprocess.PIPE, 
-                stderr=subprocess.PIPE, encoding='utf-8')
+            popen_args = ["./start_server.sh", self.command, "--name", self.test_container_name]
+            print("Starting", self.test_name, ' '.join(popen_args))
+            with open("tests-docker-stdout.txt","wb") as out, open("tests-docker-stderr.txt","wb") as err:
+                self.server_proc = subprocess.Popen(popen_args,
+                    stdout=out,
+                    stderr=err,
+                    encoding='utf-8')
         else:
             print("Assuming the server is already running.")
 
